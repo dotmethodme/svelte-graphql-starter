@@ -1,0 +1,48 @@
+############################################################
+# User
+############################################################
+
+fragment UserPart on User {
+  id
+  name
+  email
+}
+
+mutation login($email: String!, $password: String!) {
+  login(email: $email, password: $password) {
+    rawToken {
+      id
+      name
+      email
+    }
+    token
+  }
+}
+
+mutation register($name: String!, $email: String!, $password: String!) {
+  register(name: $name, email: $email, password: $password) {
+    ...UserPart
+  }
+}
+
+############################################################
+# Reminders
+############################################################
+
+fragment ReminderPart on Reminder {
+  id
+  title
+  schedule
+}
+
+mutation createReminder($title: String!, $schedule: String!) {
+  createReminder(title: $title, schedule: $schedule) {
+    ...ReminderPart
+  }
+}
+
+query reminders {
+  reminders {
+    ...ReminderPart
+  }
+}
